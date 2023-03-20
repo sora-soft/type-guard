@@ -1,9 +1,8 @@
 import {Ajv, AnySchema} from './Ajv.js';
 import {TypeGuardError} from './TypeGuardError.js';
+import {AVJ_OPTIONS} from './Const.js';
 
-const ajv = new Ajv({
-  allowUnionTypes: true,
-});
+const ajv = new Ajv(AVJ_OPTIONS);
 
 class TypeGuard {
   static assertType<T>(value: unknown, schema: void): asserts value is T {

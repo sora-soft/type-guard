@@ -1,13 +1,12 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import {Ajv, AnySchema, ValidateFunction} from './Ajv.js';
 import {TypeGuardError} from './TypeGuardError.js';
+import {AVJ_OPTIONS} from './Const.js';
 import 'reflect-metadata';
 
 const assertionsMetadataKey = Symbol('assertions');
 
-const ajv = new Ajv({
-  allowUnionTypes: true,
-});
+const ajv = new Ajv(AVJ_OPTIONS);
 
 interface IParamValidator {
   validate: ValidateFunction;
