@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "CommonJS",
+    "declaration": true,
+    "lib": ["es2022"],
+    "target": "ESNext",
+    "outDir": "../../dist/transformer",
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "alwaysStrict": true,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "plugins": []
+  },
+  "include": [
+    "./**/*",
+  ]
+}
