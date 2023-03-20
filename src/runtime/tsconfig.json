@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    "moduleResolution": "node",
-    "module": "CommonJS",
+    "moduleResolution": "node16",
+    "module": "Node16",
     "declaration": true,
-    "lib": ["ES2022"],
     "target": "ESNext",
-    "outDir": "./dist/transformer",
+    "outDir": "../../dist/runtime",
     "sourceMap": true,
     "strictNullChecks": true,
     "alwaysStrict": true,
@@ -15,6 +14,6 @@
     "plugins": []
   },
   "include": [
-    "./src/transformer/**/*"
+    "./**/*"
   ]
 }

@@ -60,43 +60,6 @@ export const transformNode = (node: ts.Node, visitorContext: PartialVisitorConte
       }
     }
   }
-
-  // if (ts.isParameter(node) && node.type !== undefined) {
-  //   const decorators = ts.getDecorators(node);
-  //   if (!decorators || decorators.length <= 0)
-  //     return node;
-  //   const type = visitorContext.checker.getTypeFromTypeNode(node.type);
-
-  //   const newDecorators = decorators.map(decorator => {
-  //     const expression = decorator.expression as ts.CallLikeExpression;
-  //     const signature = visitorContext.checker.getResolvedSignature(expression);
-  //     if (
-  //       signature !== undefined
-  //       && signature.declaration !== undefined
-  //       && path.resolve(signature.declaration.getSourceFile().fileName) === path.resolve(path.join(__dirname, '..', 'runtime', 'TypeGuard.d.ts'))
-  //       // &&  <= 1
-  //     ) {
-  //       const name = visitorContext.checker.getTypeAtLocation(signature.declaration).symbol.name;
-  //       switch (name) {
-  //         case 'param': {
-  //           const schema = visitorContext.schemaGenerator.getTypeDefinition(type, false, undefined, undefined, undefined, undefined, true);
-  //           const schemaExpression = generateAst(schema);
-  //           if (schemaExpression) {
-  //             const callExpression: ts.CallExpression = decorator.expression as ts.CallExpression;
-  //             return ts.factory.updateDecorator(decorator, ts.factory.updateCallExpression(callExpression, callExpression.expression, undefined, [schemaExpression]));
-  //           }
-  //           break;
-  //         }
-  //       }
-  //     }
-  //   });
-
-  //   return ts.factory.updateParameterDeclaration();
-  // }
-  // ts.SyntaxKind.AbstractKeyword;
-  // console.log(node.getText());
-  // console.log(node.kind);
-  // if (ts.ispara)
   return node;
 };
 
@@ -127,7 +90,7 @@ const generateAst = (origin: unknown): ts.Expression | null => {
     for(const [key, value] of Object.entries(origin)) {
       const v = generateAst(value);
       if (v) {
-        properties.push(ts.factory.createPropertyAssignment(key, v));
+        properties.push(ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(key), v));
       }
     }
     return ts.factory.createObjectLiteralExpression(properties);

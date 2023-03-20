@@ -23,7 +23,7 @@ module.exports = {
   ],
   'parser': '@typescript-eslint/parser',
   'parserOptions': {
-    'project': ['./runtime.tsconfig.json', './transformer.tsconfig.json', './tsconfig.eslint.json'],
+    'project': ['./src/runtime/tsconfig.json', './src/transformer/tsconfig.json', './tsconfig.eslint.json'],
     'sourceType': 'module',
   },
   'plugins': [

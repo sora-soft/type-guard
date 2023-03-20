@@ -417,7 +417,7 @@ const validationKeywords = {
   examples: true,                    // Draft 6 (draft-handrews-json-schema-validation-01)
 
   ignore: true,
-  description: true,
+  description: false,
   format: true,
   default: true,
   $ref: true,
@@ -545,27 +545,27 @@ export class JsonSchemaGenerator {
       return;
     }
 
-    if (!this.isFromDefaultLib(symbol)) {
+    // if (!this.isFromDefaultLib(symbol)) {
       // the comments for a symbol
-      const comments = symbol.getDocumentationComment(this.tc);
+      // const comments = symbol.getDocumentationComment(this.tc);
 
-      if (comments.length) {
-        definition.description = comments
-          .map((comment) => {
-            const newlineNormalizedComment = comment.text.replace(/\r\n/g, '\n');
+      // if (comments.length) {
+      //   definition.description = comments
+      //     .map((comment) => {
+      //       const newlineNormalizedComment = comment.text.replace(/\r\n/g, '\n');
 
-            // If a comment contains a "{@link XYZ}" inline tag that could not be
-            // resolved by the TS checker, then this comment will contain a trailing
-            // whitespace that we need to remove.
-            if (comment.kind === 'linkText') {
-              return newlineNormalizedComment.trim();
-            }
+      //       // If a comment contains a "{@link XYZ}" inline tag that could not be
+      //       // resolved by the TS checker, then this comment will contain a trailing
+      //       // whitespace that we need to remove.
+      //       if (comment.kind === 'linkText') {
+      //         return newlineNormalizedComment.trim();
+      //       }
 
-            return newlineNormalizedComment;
-          })
-          .join('').trim();
-      }
-    }
+      //       return newlineNormalizedComment;
+      //     })
+      //     .join('').trim();
+      // }
+    // }
 
     // jsdocs are separate from comments
     const jsdocs = symbol.getJsDocTags();
@@ -801,7 +801,7 @@ export class JsonSchemaGenerator {
     const members: ts.NodeArray<ts.EnumMember> =
             node.kind === ts.SyntaxKind.EnumDeclaration
               ? (node as ts.EnumDeclaration).members
-              : ts.createNodeArray([node as ts.EnumMember]);
+              : ts.factory.createNodeArray([node as ts.EnumMember]);
     const enumValues: (number | boolean | string | null)[] = [];
     const enumTypes: string[] = [];
 
@@ -886,6 +886,9 @@ export class JsonSchemaGenerator {
         pushEnumValue(value);
       } else {
         const symbol = valueType.aliasSymbol;
+        if (valueType.symbol?.escapedName === 'Function') {
+          continue;
+        }
         const def = this.getTypeDefinition(valueType, undefined, undefined, symbol, symbol);
         if (def.type === 'undefined') {
           if (prop) {
@@ -1186,6 +1189,10 @@ export class JsonSchemaGenerator {
     pairedSymbol?: ts.Symbol,
     forceNotRef = false
   ): Definition {
+    if (typ.symbol?.escapedName === 'Function') {
+      console.trace();
+      process.exit(1);
+    }
     forceNotRef = true;
     asRef = false;
     const definition: Definition = {}; // real definition
@@ -1349,6 +1356,8 @@ export class JsonSchemaGenerator {
 
             const types = (<ts.IntersectionType>typ).types;
             for (const member of types) {
+              if (member.symbol?.escapedName === 'Function')
+                continue;
               const other = this.getTypeDefinition(member, false, undefined, undefined, undefined, undefined, true);
               definition.type = other.type; // should always be object
               definition.properties = {

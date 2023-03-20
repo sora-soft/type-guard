@@ -1,5 +1,6 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 // reference from https://github.com/woutervh-/typescript-is/blob/master/src/transform-inline/transformer.ts
+import 'source-map-support/register.js';
 import * as ts from 'typescript';
 import {TransformError} from './TransformError.js';
 import {transformNode} from './TransformNode.js';
