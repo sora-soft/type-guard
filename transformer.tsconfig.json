@@ -3,9 +3,9 @@
     "moduleResolution": "node",
     "module": "CommonJS",
     "declaration": true,
-    "lib": ["es2022"],
+    "lib": ["ES2022"],
     "target": "ESNext",
-    "outDir": "../../dist/transformer",
+    "outDir": "./dist/transformer",
     "sourceMap": true,
     "strictNullChecks": true,
     "alwaysStrict": true,
@@ -15,6 +15,6 @@
     "plugins": []
   },
   "include": [
-    "./**/*",
+    "./src/transformer/**/*"
   ]
 }

@@ -5,7 +5,7 @@
   "main": "./dist/runtime/index.js",
   "types": "./dist/runtime/index.d.ts",
   "scripts": {
-    "build": "rimraf ./dist && tsc --project ./src/runtime/tsconfig.json && rimraf ./transformer && tsc --project ./src/transformer/tsconfig.json && copyfiles -f ./src/transformer/package.json ./dist/transformer",
+    "build": "rimraf ./dist && tsc --project ./runtime.tsconfig.json && tsc --project ./transformer.tsconfig.json && copyfiles -f ./src/transformer/package.json ./dist/transformer",
     "clean": "rimraf ./dist",
     "prepublishOnly": "npm run build",
     "prepare": "husky install",
