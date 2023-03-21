@@ -961,9 +961,6 @@ export class JsonSchemaGenerator {
     } else {
       definition[unionModifier] = schemas;
     }
-    if (unionModifier==='anyOf') {
-      console.log(definition);
-    }
     return definition;
   }
 
