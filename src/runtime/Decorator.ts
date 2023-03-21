@@ -1,12 +1,10 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
-import {Ajv, AnySchema, ValidateFunction} from './Ajv.js';
+import {AnySchema, ValidateFunction} from './Ajv.js';
 import {TypeGuardError} from './TypeGuardError.js';
-import {AVJ_OPTIONS} from './Const.js';
+import {ajv} from './Const.js';
 import 'reflect-metadata';
 
 const assertionsMetadataKey = Symbol('assertions');
-
-const ajv = new Ajv(AVJ_OPTIONS);
 
 interface IParamValidator {
   validate: ValidateFunction;
@@ -14,6 +12,9 @@ interface IParamValidator {
 }
 
 export function AssertType(schema: void) {
+  if (!(schema as unknown)) {
+    throw new Error('Type guard should use under ttypescript');
+  }
   const validate = ajv.compile(schema as unknown as AnySchema);
   return function (target: Object, propertyKey: string, parameterIndex: number) {
     const assertions: IParamValidator[] = Reflect.getOwnMetadata(assertionsMetadataKey, target, propertyKey) as IParamValidator[] || [];

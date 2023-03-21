@@ -1,11 +1,12 @@
-import {Ajv, AnySchema} from './Ajv.js';
+import {AnySchema} from './Ajv.js';
 import {TypeGuardError} from './TypeGuardError.js';
-import {AVJ_OPTIONS} from './Const.js';
-
-const ajv = new Ajv(AVJ_OPTIONS);
+import {ajv} from './Const.js';
 
 class TypeGuard {
   static assertType<T>(value: unknown, schema: void): asserts value is T {
+    if (!(schema as unknown)) {
+      throw new Error('Type guard should use under ttypescript');
+    }
     const validate = ajv.compile(schema as unknown as AnySchema);
     const valid = validate(value);
     if (!valid) {
@@ -18,6 +19,9 @@ class TypeGuard {
   }
 
   static valid<T>(value: unknown, schema: void): value is T {
+    if (!(schema as unknown)) {
+      throw new Error('Type guard should use under ttypescript');
+    }
     const validate = ajv.compile(schema as unknown as AnySchema);
     const valid = validate(value);
     return valid as boolean;

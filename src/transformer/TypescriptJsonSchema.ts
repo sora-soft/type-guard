@@ -672,16 +672,16 @@ export class JsonSchemaGenerator {
       } else if (flags & ts.TypeFlags.Boolean) {
         definition.type = 'boolean';
       } else if (flags & ts.TypeFlags.ESSymbol) {
-        definition.type = 'symbol';
+        definition.type = 'string';
       } else if (flags & ts.TypeFlags.Null) {
         definition.type = 'null';
       } else if (flags & ts.TypeFlags.Undefined || propertyTypeString === 'void') {
-        definition.type = 'undefined';
+        definition.type = 'null';
       } else if (flags & ts.TypeFlags.Any || flags & ts.TypeFlags.Unknown) {
         // no type restriction, so that anything will match
       } else if (propertyTypeString === 'Date' && !this.args.rejectDateType) {
         definition.type = 'string';
-        definition.format = definition.format || 'date-time';
+        // definition.format = definition.format || 'date-time';
       } else if (propertyTypeString === 'object') {
         definition.type = 'object';
         definition.properties = {};
@@ -887,6 +887,7 @@ export class JsonSchemaGenerator {
       } else {
         const symbol = valueType.aliasSymbol;
         if (valueType.symbol?.escapedName === 'Function') {
+          schemas.push({type: 'object'});
           continue;
         }
         const def = this.getTypeDefinition(valueType, undefined, undefined, symbol, symbol);
@@ -959,6 +960,9 @@ export class JsonSchemaGenerator {
       }
     } else {
       definition[unionModifier] = schemas;
+    }
+    if (unionModifier==='anyOf') {
+      console.log(definition);
     }
     return definition;
   }
@@ -1072,7 +1076,6 @@ export class JsonSchemaGenerator {
 
           const typ = this.tc.getTypeAtLocation(indexSignature.type);
           const def = this.getTypeDefinition(typ, undefined, 'anyOf');
-
           if (isStringIndexed) {
             definition.type = 'object';
             definition.additionalProperties = def;

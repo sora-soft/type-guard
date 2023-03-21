@@ -1,6 +1,8 @@
-import {Options} from './Ajv.js';
+import {Options, Ajv} from './Ajv.js';
 
-export const AVJ_OPTIONS: Options = {
+export const AJV_OPTIONS: Options = {
   allowUnionTypes: true,
   validateFormats: false,
 };
+
+export const ajv = new Ajv(AJV_OPTIONS);
