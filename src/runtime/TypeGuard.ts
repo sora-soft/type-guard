@@ -6,7 +6,7 @@ import {AnyValidateFunction} from 'ajv/dist/core.js';
 class TypeGuard {
   private static validateCache = new Map<string, AnyValidateFunction<unknown>>();
 
-  static assertType<T>(value: unknown, schema: void, hash: void): asserts value is T {
+  static assert<T>(value: unknown, schema: void, hash: void): asserts value is T {
     if (!(schema as unknown)) {
       throw new Error('Type guard should use under ttypescript');
     }
@@ -22,7 +22,7 @@ class TypeGuard {
     }
   }
 
-  static valid<T>(value: unknown, schema: void, hash: void): value is T {
+  static is<T>(value: unknown, schema: void, hash: void): value is T {
     if (!(schema as unknown)) {
       throw new Error('Type guard should use under ttypescript');
     }
