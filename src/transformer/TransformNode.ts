@@ -16,8 +16,8 @@ export const transformNode = (node: ts.Node, visitorContext: PartialVisitorConte
     ) {
       const name = visitorContext.checker.getTypeAtLocation(signature.declaration).symbol.name;
       switch(name) {
-        case 'valid':
-        case 'assertType': {
+        case 'is':
+        case 'assert': {
           const typeArgument = node.typeArguments[0];
           const type = visitorContext.checker.getTypeFromTypeNode(typeArgument);
           const schema = visitorContext.schemaGenerator.getTypeDefinition(type, false, undefined, undefined, undefined, undefined, true);
