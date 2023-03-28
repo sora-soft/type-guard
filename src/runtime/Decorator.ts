@@ -48,15 +48,6 @@ export function ValidateClass() {
                 throw err;
               }
             }
-            // const errorObject = assertions[i].assertion(args[i]);
-            // if (errorObject !== null) {
-            //   const errorInstance = new errorConstructor(errorObject, args[i]);
-            //   if(assertions[i].options.async) {
-            //     return Promise.reject(errorInstance);
-            //   } else {
-            //     throw errorInstance;
-            //   }
-            // }
           }
           return originalMethod.apply(this, args) as unknown;
         };

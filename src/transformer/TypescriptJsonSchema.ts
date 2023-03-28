@@ -760,7 +760,7 @@ export class JsonSchemaGenerator {
     if (valDecl?.initializer) {
       let initial = valDecl.initializer;
 
-      while (ts.isTypeAssertion(initial)) {
+      while (ts.isTypeAssertionExpression(initial)) {
         initial = initial.expression;
       }
 

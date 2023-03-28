@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as path from 'path';
+import * as objHash from 'object-hash';
 import {PartialVisitorContext} from './VisitorContext.js';
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
@@ -22,8 +23,9 @@ export const transformNode = (node: ts.Node, visitorContext: PartialVisitorConte
           const schema = visitorContext.schemaGenerator.getTypeDefinition(type, false, undefined, undefined, undefined, undefined, true);
 
           const expression = generateAst(schema);
+          const hash = objHash(schema);
           if (expression) {
-            const args = ts.factory.createNodeArray([...node.arguments, expression]);
+            const args = ts.factory.createNodeArray([...node.arguments, expression, ts.factory.createStringLiteral(hash)]);
             return ts.factory.updateCallExpression(node, node.expression, node.typeArguments, args);
           }
           break;
