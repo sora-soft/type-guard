@@ -1,6 +1,6 @@
 {
   "name": "@sora-soft/type-guard",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "",
   "main": "./dist/runtime/index.js",
   "types": "./dist/runtime/index.d.ts",
