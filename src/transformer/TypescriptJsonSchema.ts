@@ -1037,7 +1037,7 @@ export class JsonSchemaGenerator {
       return !(
         decls &&
                 decls.filter((decl) => {
-                  const mods = decl.modifiers;
+                  const mods = ts.canHaveDecorators(decl) ? ts.getModifiers(decl) : null;
                   return mods && mods.filter((mod) => mod.kind === ts.SyntaxKind.PrivateKeyword).length > 0;
                 }).length > 0
       );
